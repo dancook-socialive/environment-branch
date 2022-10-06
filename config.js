@@ -1,4 +1,4 @@
 {
     "environment" = "dev",
-    "foo" = "bar"
+    "foo" = "baz"
 }
