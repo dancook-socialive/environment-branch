@@ -1,4 +1,4 @@
 {
-    "environment" = "test",
+    "environment" = "stage",
     "foo" = "bar"
 }
