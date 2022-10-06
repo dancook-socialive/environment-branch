@@ -1,4 +1,4 @@
 {
-    "environment" = "stage",
+    "environment" = "prod",
     "foo" = "bar"
 }
