@@ -29,6 +29,8 @@ jobs:
     needs: ["pr"]
     runs-on: ubuntu-22.04
     environment: qa
+    env:
+      source_branch: ${{ github.ref }}
     permissions:
       pull-requests: write
       contents: write      
@@ -48,5 +50,5 @@ jobs:
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git merge origin/main --ff-only
+          git merge "$source_branch" --ff-only
           git push
