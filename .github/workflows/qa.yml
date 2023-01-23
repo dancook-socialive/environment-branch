@@ -1,0 +1,35 @@
+name: Trigger deploy to QA
+
+on:
+  workflow_dispatch:
+
+permissions:
+  pull-requests: write
+
+jobs:
+  qa:
+    runs-on: ubuntu-22.04
+    environment: qa
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+        with:
+          ref: main
+
+      - name: pull-request
+        uses: repo-sync/pull-request@v2
+        with:
+          destination_branch: "qa"
+          pr_title: "Pulling ${{ github.ref }} into qa"
+          pr_label: "auto-pr" 
+          github_token: ${{ github.token }}
+
+      - name: Add comment to block merge
+        run: gh pr comment --body "Should we merge?"
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Enable auto-merge with merge commit
+        run: gh pr merge --auto -r
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
