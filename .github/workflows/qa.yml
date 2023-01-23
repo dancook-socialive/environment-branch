@@ -25,6 +25,7 @@ jobs:
           pr_label: "auto-pr" 
           pr_draft: true
           github_token: ${{ github.token }}
+
   qa:
     needs: ["pr"]
     runs-on: ubuntu-22.04
