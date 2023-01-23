@@ -1,57 +1,57 @@
-name: Environment Branching
+# name: Environment Branching
 
-on:
-  push:
-    branches:
-      - main
+# on:
+#   push:
+#     branches:
+#       - main
 
-jobs:
-  qa:
-    runs-on: ubuntu-22.04
-    environment: qa
-    steps:
-      - name: checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          ref: qa
-      - name: Fast forward QA
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git merge origin/main --ff-only
-          git push
+# jobs:
+#   qa:
+#     runs-on: ubuntu-22.04
+#     environment: qa
+#     steps:
+#       - name: checkout
+#         uses: actions/checkout@v3
+#         with:
+#           fetch-depth: 0
+#           ref: qa
+#       - name: Fast forward QA
+#         run: |
+#           git config user.name github-actions
+#           git config user.email github-actions@github.com
+#           git merge origin/main --ff-only
+#           git push
 
-  staging:
-    needs: qa
-    runs-on: ubuntu-22.04
-    environment: staging
-    steps:
-      - name: checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          ref: staging
-      - name: Fast forward staging
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git merge origin/main --ff-only
-          git push
+#   staging:
+#     needs: qa
+#     runs-on: ubuntu-22.04
+#     environment: staging
+#     steps:
+#       - name: checkout
+#         uses: actions/checkout@v3
+#         with:
+#           fetch-depth: 0
+#           ref: staging
+#       - name: Fast forward staging
+#         run: |
+#           git config user.name github-actions
+#           git config user.email github-actions@github.com
+#           git merge origin/main --ff-only
+#           git push
 
-  prod:
-    needs: staging
-    runs-on: ubuntu-22.04
-    environment: prod
-    steps:
-      - name: checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          ref: prod
-      - name: Fast forward prod
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git merge origin/main --ff-only
-          git push
+#   prod:
+#     needs: staging
+#     runs-on: ubuntu-22.04
+#     environment: prod
+#     steps:
+#       - name: checkout
+#         uses: actions/checkout@v3
+#         with:
+#           fetch-depth: 0
+#           ref: prod
+#       - name: Fast forward prod
+#         run: |
+#           git config user.name github-actions
+#           git config user.email github-actions@github.com
+#           git merge origin/main --ff-only
+#           git push

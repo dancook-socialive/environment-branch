@@ -7,9 +7,8 @@ permissions:
   pull-requests: write
 
 jobs:
-  qa:
+  pr:
     runs-on: ubuntu-22.04
-    environment: qa
     steps:
       - name: checkout
         uses: actions/checkout@v3
@@ -23,8 +22,24 @@ jobs:
           pr_title: "Pulling ${{ github.ref }} into qa"
           pr_label: "auto-pr" 
           github_token: ${{ github.token }}
+  qa:
+    runs-on: ubuntu-22.04
+    environment: qa
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: qa
 
-      - name: Enable auto-merge with merge commit
-        run: gh pr merge --auto -r
+      - name: close PR
+        run: gh pr close --comment "Closing PR, branch updated via pipeline"
         env:
-          GITHUB_TOKEN: ${{ secrets.ACCOUNT_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Fast forward QA
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git merge origin/main --ff-only
+          git push
