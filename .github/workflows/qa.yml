@@ -32,4 +32,4 @@ jobs:
       - name: Enable auto-merge with merge commit
         run: gh pr merge --auto -r
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ secrets.ACCOUNT_TOKEN }}
