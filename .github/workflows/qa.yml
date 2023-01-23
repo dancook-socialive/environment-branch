@@ -9,6 +9,8 @@ permissions:
 jobs:
   pr:
     runs-on: ubuntu-22.04
+    outputs:
+      pr_id: ${{ steps.open-pr.outputs.pr_number }}
     steps:
       - name: checkout
         uses: actions/checkout@v3
@@ -16,6 +18,7 @@ jobs:
           ref: main
 
       - name: pull-request
+        id: open-pr
         uses: repo-sync/pull-request@v2
         with:
           destination_branch: "qa"
@@ -28,21 +31,16 @@ jobs:
     runs-on: ubuntu-22.04
     environment: qa
     steps:
-      - name: checkout main branch
-        uses: actions/checkout@v3
-        with:
-          ref: main
-
-      - name: close PR
-        run: gh pr close --comment "Closing PR, branch updated via pipeline"
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-
       - name: checkout QA branch
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
           ref: qa
+
+      - name: close PR
+        run: gh pr close ${{ needs.pr.outputs.pr_id }} --comment "Closing PR, branch updated via pipeline"
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
 
       - name: Fast forward QA
         run: |
