@@ -35,6 +35,7 @@ jobs:
     permissions:
       pull-requests: write
       contents: write      
+    
     steps:
       - name: checkout QA branch
         uses: actions/checkout@v3
