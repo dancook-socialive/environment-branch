@@ -24,8 +24,8 @@ jobs:
           pr_label: "auto-pr" 
           github_token: ${{ github.token }}
 
-      - name: Add comment to block merge
-        run: gh pr comment --body "Should we merge?"
+      - name: make a draft
+        run: gh pr ready --undo
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
