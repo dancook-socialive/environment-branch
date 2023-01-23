@@ -28,16 +28,21 @@ jobs:
     runs-on: ubuntu-22.04
     environment: qa
     steps:
-      - name: checkout
+      - name: checkout main branch
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0
-          ref: qa
+          ref: main
 
       - name: close PR
         run: gh pr close --comment "Closing PR, branch updated via pipeline"
         env:
           GITHUB_TOKEN: ${{ github.token }}
+
+      - name: checkout QA branch
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: qa
 
       - name: Fast forward QA
         run: |
