@@ -21,8 +21,10 @@ jobs:
           destination_branch: "qa"
           pr_title: "Pulling ${{ github.ref }} into qa"
           pr_label: "auto-pr" 
+          pr_draft: true
           github_token: ${{ github.token }}
   qa:
+    needs: ["pr"]
     runs-on: ubuntu-22.04
     environment: qa
     steps:
