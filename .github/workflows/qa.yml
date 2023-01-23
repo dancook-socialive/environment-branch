@@ -1,7 +1,9 @@
 name: Trigger deploy to QA
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - main
 
 permissions:
   pull-requests: write
@@ -30,6 +32,8 @@ jobs:
     needs: ["pr"]
     runs-on: ubuntu-22.04
     environment: qa
+    permissions:
+      contents: write      
     steps:
       - name: checkout QA branch
         uses: actions/checkout@v3
