@@ -6,6 +6,7 @@ on:
 jobs:
   pr:
     runs-on: ubuntu-22.04
+    environment: qa
     outputs:
       pr_id: ${{ steps.open-pr.outputs.pr_number }}
 
